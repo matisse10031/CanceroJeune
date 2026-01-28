@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immune Defense V4.0 - Ultimate Card System</title>
+    <link rel="stylesheet" href="jeu.css">
+</head>
+<body>
+    
+    <!-- MENU PRINCIPAL -->
+    <div id="mainMenu" class="screen active">
+        <div class="menu-bg"></div>
+        <div class="menu-content">
+            <h1 class="logo">
+                <span class="logo-immune">IMMUNE</span>
+                <span class="logo-defense">DEFENSE</span>
+            </h1>
+            <div class="version">V4.0 ULTIMATE EDITION</div>
+            <p class="tagline">Apprenez le système immunitaire en jouant !</p>
+            
+            <div class="menu-buttons">
+                <button class="menu-btn play-btn" id="btnPlay">
+                    <span class="btn-icon">⚔️</span>
+                    <span>JOUER</span>
+                </button>
+                <button class="menu-btn" id="btnSpin">
+                    <span class="btn-icon">🎴</span>
+                    <span>SPIN DE CARTES</span>
+                </button>
+                <button class="menu-btn" id="btnCollection">
+                    <span class="btn-icon">📚</span>
+                    <span>COLLECTION</span>
+                    <span class="badge" id="collectionBadge">0/80</span>
+                </button>
+                <button class="menu-btn" id="btnStats">
+                    <span class="btn-icon">📊</span>
+                    <span>STATISTIQUES</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ÉCRAN SPIN -->
+    <div id="spinScreen" class="screen">
+        <button class="back-btn" onclick="showScreen('mainMenu')">← Retour</button>
+        
+        <div class="spin-container">
+            <h2 class="screen-title">🎴 SPIN DE CARTES 🎴</h2>
+            <p class="screen-subtitle">Choisissez votre booster et obtenez une nouvelle carte !</p>
+            
+            <div class="spin-stats">
+                <div class="stat-item">
+                    <span class="stat-label">Spins totaux:</span>
+                    <span class="stat-value" id="totalSpins">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Cartes débloquées:</span>
+                    <span class="stat-value" id="cardsUnlocked">0/80</span>
+                </div>
+            </div>
+            
+            <!-- CHOIX DU BOOSTER -->
+            <div class="booster-select">
+                <div class="booster-card attack" onclick="selectBooster('ATTACK')">
+                    <div class="booster-icon">⚔️</div>
+                    <div class="booster-name">ATTAQUE</div>
+                    <div class="booster-desc">Tours offensives</div>
+                </div>
+                <div class="booster-card defense" onclick="selectBooster('DEFENSE')">
+                    <div class="booster-icon">🛡️</div>
+                    <div class="booster-name">DÉFENSE</div>
+                    <div class="booster-desc">Tours défensives</div>
+                </div>
+                <div class="booster-card support" onclick="selectBooster('SUPPORT')">
+                    <div class="booster-icon">💚</div>
+                    <div class="booster-name">SUPPORT</div>
+                    <div class="booster-desc">Tours de soutien</div>
+                </div>
+            </div>
+            
+            <!-- ANIMATION SPIN -->
+            <div id="spinAnimation" class="spin-animation" style="display:none;">
+                <div class="spin-machine">
+                    <!-- GAUCHE: Raretés possibles -->
+                    <div class="spin-rarities">
+                        <h3>Raretés possibles:</h3>
+                        <div class="rarity-list">
+                            <div class="rarity-item common">⭐ Commun (50%)</div>
+                            <div class="rarity-item uncommon">⭐⭐ Peu commun (30%)</div>
+                            <div class="rarity-item rare">⭐⭐⭐ Rare (12%)</div>
+                            <div class="rarity-item super-rare">⭐⭐⭐⭐ Super Rare (5%)</div>
+                            <div class="rarity-item epic">⭐⭐⭐⭐⭐ Épique (2%)</div>
+                            <div class="rarity-item legendary">⭐⭐⭐⭐⭐⭐ Légendaire (0.8%)</div>
+                            <div class="rarity-item mythic">⭐⭐⭐⭐⭐⭐⭐ Mythique (0.2%)</div>
+                        </div>
+                    </div>
+                    
+                    <!-- CENTRE: Carte révélée -->
+                    <div class="spin-card-reveal">
+                        <div class="card-pack spinning" id="cardPack">
+                            <div class="pack-front">?</div>
+                        </div>
+                        <div class="revealed-card" id="revealedCard" style="display:none;"></div>
+                    </div>
+                    
+                    <!-- DROITE: Info éducative -->
+                    <div class="spin-education">
+                        <h3>Rôle dans le corps:</h3>
+                        <div class="education-content" id="educationContent">
+                            <p>Faites un spin pour découvrir !</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="spin-again-btn" onclick="resetSpin()">🔄 NOUVEAU SPIN</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ÉCRAN COLLECTION -->
+    <div id="collectionScreen" class="screen">
+        <button class="back-btn" onclick="showScreen('mainMenu')">← Retour</button>
+        
+        <div class="collection-container">
+            <h2 class="screen-title">📚 VOTRE COLLECTION 📚</h2>
+            
+            <div class="collection-filters">
+                <button class="filter-btn active" onclick="filterCollection('ALL')">Toutes</button>
+                <button class="filter-btn attack" onclick="filterCollection('ATTACK')">⚔️ Attaque</button>
+                <button class="filter-btn defense" onclick="filterCollection('DEFENSE')">🛡️ Défense</button>
+                <button class="filter-btn support" onclick="filterCollection('SUPPORT')">💚 Support</button>
+            </div>
+            
+            <div class="collection-grid" id="collectionGrid"></div>
+        </div>
+    </div>
+
+    <!-- ÉCRAN STATS -->
+    <div id="statsScreen" class="screen">
+        <button class="back-btn" onclick="showScreen('mainMenu')">← Retour</button>
+        
+        <div class="stats-container">
+            <h2 class="screen-title">📊 VOS STATISTIQUES 📊</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-icon">🎮</div>
+                    <div class="stat-label">Parties jouées</div>
+                    <div class="stat-value" id="statGames">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-label">Victoires</div>
+                    <div class="stat-value" id="statWins">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-icon">☠️</div>
+                    <div class="stat-label">Total tués</div>
+                    <div class="stat-value" id="statKills">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-icon">🌊</div>
+                    <div class="stat-label">Vague max</div>
+                    <div class="stat-value" id="statWave">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-icon">🎴</div>
+                    <div class="stat-label">Spins totaux</div>
+                    <div class="stat-value" id="statSpins">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-icon">📚</div>
+                    <div class="stat-label">Cartes possédées</div>
+                    <div class="stat-value" id="statCards">0/80</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ÉCRAN SÉLECTION DECK -->
+    <div id="deckSelectScreen" class="screen">
+        <button class="back-btn" onclick="showScreen('mainMenu')">← Retour</button>
+        
+        <div class="deck-select-container">
+            <h2 class="screen-title">⚔️ SÉLECTIONNEZ 6 CARTES ⚔️</h2>
+            <div class="deck-counter">
+                <span id="deckCount">0</span> / 6 cartes sélectionnées
+            </div>
+            
+            <div class="your-deck">
+                <h3>Votre deck actuel:</h3>
+                <div class="selected-cards" id="selectedDeck"></div>
+            </div>
+            
+            <div class="available-cards">
+                <h3>Cartes disponibles:</h3>
+                <div class="cards-grid" id="availableCards"></div>
+            </div>
+            
+            <button class="start-battle-btn" id="startBattleBtn" disabled onclick="startBattle()">
+                🎮 LANCER LA BATAILLE
+            </button>
+        </div>
+    </div>
+
+    <!-- JEU -->
+    <div id="gameScreen" class="screen">
+        <!-- HUD -->
+        <div class="game-hud">
+            <div class="hud-left">
+                <div class="hud-stat">💰 <span id="hudMoney">300</span></div>
+                <div class="hud-stat">❤️ <span id="hudLives">30</span></div>
+            </div>
+            <div class="hud-center">
+                <div class="hud-wave">VAGUE <span id="hudWave">1</span>/20</div>
+            </div>
+            <div class="hud-right">
+                <div class="hud-stat">☠️ <span id="hudKills">0</span></div>
+                <button class="hud-btn" id="btnSpeed" onclick="toggleSpeed()">⏩</button>
+                <button class="hud-btn" id="btnPause" onclick="togglePause()">⏸️</button>
+                <button class="hud-btn" onclick="quitGame()">🏠</button>
+            </div>
+        </div>
+
+        <!-- BOSS BAR -->
+        <div id="bossBar" class="boss-bar" style="display:none;">
+            <div class="boss-label">👑 <span id="bossName">BOSS</span></div>
+            <div class="boss-hp-container">
+                <div class="boss-hp-bar" id="bossHpBar"></div>
+                <div class="boss-hp-text"><span id="bossHp">0</span>/<span id="bossMaxHp">0</span></div>
+            </div>
+        </div>
+
+        <!-- BATTLEFIELD avec Pan/Zoom -->
+        <div class="battlefield-wrapper" id="battlefieldWrapper">
+            <div class="battlefield" id="battlefield">
+                <canvas id="pathCanvas"></canvas>
+                <div id="spotsLayer"></div>
+                <div id="towersLayer"></div>
+                <div id="enemiesLayer"></div>
+                <div id="projectilesLayer"></div>
+            </div>
+        </div>
+
+        <!-- DECK (rétractable) -->
+        <div class="game-deck" id="gameDeck">
+            <div class="deck-toggle" onclick="toggleDeck()">
+                <span id="deckToggleIcon">▼</span>
+            </div>
+            <div class="deck-cards" id="deckCards"></div>
+        </div>
+
+        <!-- CONTROLES -->
+        <div class="game-controls">
+            <button class="wave-btn" id="launchWaveBtn" onclick="launchWave()">
+                ▶️ LANCER VAGUE
+            </button>
+        </div>
+
+        <!-- PANEL INFO TOUR (avec upgrade et vente) -->
+        <div id="towerPanel" class="tower-panel" style="display:none;">
+            <button class="close-panel" onclick="closeTowerPanel()">✕</button>
+            
+            <div class="tower-info" id="towerInfo"></div>
+            
+            <div class="tower-upgrades">
+                <h4>Améliorations:</h4>
+                <div class="upgrade-btns">
+                    <button class="upgrade-btn tier1" id="upgradeTier1" onclick="upgradeTower(1)">
+                        <span class="tier-icon">⬆️</span>
+                        <span>Tier 1</span>
+                        <span class="tier-cost" id="tier1Cost">0💰</span>
+                    </button>
+                    <button class="upgrade-btn tier2" id="upgradeTier2" onclick="upgradeTower(2)">
+                        <span class="tier-icon">⬆️⬆️</span>
+                        <span>Tier 2</span>
+                        <span class="tier-cost" id="tier2Cost">0💰</span>
+                    </button>
+                    <button class="upgrade-btn tier3" id="upgradeTier3" onclick="upgradeTower(3)">
+                        <span class="tier-icon">⬆️⬆️⬆️</span>
+                        <span>Tier 3</span>
+                        <span class="tier-cost" id="tier3Cost">0💰</span>
+                    </button>
+                </div>
+            </div>
+            
+            <button class="sell-btn" onclick="sellTower()">
+                💸 VENDRE <span id="sellValue">0</span>💰
+            </button>
+        </div>
+    </div>
+
+    <!-- OVERLAYS -->
+    <div id="bossAlert" class="overlay" style="display:none;">
+        <div class="overlay-content">
+            <div class="overlay-icon">⚠️</div>
+            <h2>ALERTE BOSS!</h2>
+            <div class="boss-name-big" id="bossNameAlert">BOSS</div>
+            <p>Préparez vos défenses!</p>
+        </div>
+    </div>
+
+    <div id="victoryScreen" class="overlay" style="display:none;">
+        <div class="overlay-content victory">
+            <div class="overlay-icon">🏆</div>
+            <h2>VICTOIRE!</h2>
+            <p>Vous avez survécu aux 20 vagues!</p>
+            <div id="victoryStats"></div>
+            <button class="overlay-btn" onclick="location.reload()">🔄 REJOUER</button>
+            <button class="overlay-btn" onclick="showScreen('mainMenu')">🏠 MENU</button>
+        </div>
+    </div>
+
+    <div id="defeatScreen" class="overlay" style="display:none;">
+        <div class="overlay-content defeat">
+            <div class="overlay-icon">💀</div>
+            <h2>GAME OVER</h2>
+            <p>Le système immunitaire a été submergé...</p>
+            <div id="defeatStats"></div>
+            <button class="overlay-btn" onclick="location.reload()">🔄 RÉESSAYER</button>
+            <button class="overlay-btn" onclick="showScreen('mainMenu')">🏠 MENU</button>
+        </div>
+    </div>
+
+    <script src="jeudata.js"></script>
+    <script src="jeu.js"></script>
+</body>
+</html>

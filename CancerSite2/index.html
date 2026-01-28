@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CancéroJeune - Plateforme éducative sur le cancer pour les jeunes, créée par des élèves engagés du Collège Mont-Royal">
+  <meta name="keywords" content="cancer, jeunes, information, prévention, sensibilisation">
+  <meta name="author" content="Matisse Winner & Yann-Jaden Réjouis">
+  
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <title>CancéroJeune - Information sur le cancer pour les jeunes</title>
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Préchargement des polices pour performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+</head>
+
+<body>
+  <!-- Skip to main content pour accessibilité -->
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+  <!-- Sidebar verticale -->
+  <nav class="sidebar" aria-label="Navigation principale">
+    <ul>
+      <li>
+        <a href="#presentation" aria-label="Aller à la section présentation">
+          <span class="icon" aria-hidden="true">📘</span>
+          <span class="label">Présentation</span>
+        </a>
+      </li>
+      <li>
+        <a href="#services" aria-label="Aller aux services">
+          <span class="icon" aria-hidden="true">⚙️</span>
+          <span class="label">Services</span>
+        </a>
+      </li>
+      <li>
+        <a href="#don" aria-label="Faire un don">
+          <span class="icon" aria-hidden="true">💛</span>
+          <span class="label">Don</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  
+  <!-- Header -->
+  <header class="topbar" id="topbar">
+    <div class="logo">
+      <img src="images/logo.png" alt="Logo CancéroJeune" width="48" height="48">
+      <div class="site-name">CancéroJeune</div>
+    </div>
+
+    <!-- Barre de recherche + suggestions -->
+    <div class="search-container">
+      <label for="searchBar" class="visually-hidden">Rechercher</label>
+      <input 
+        type="search" 
+        id="searchBar" 
+        class="search-bar" 
+        placeholder="Rechercher un type de cancer, un symptôme..."
+        autocomplete="off"
+        aria-label="Rechercher des informations sur le cancer"
+      >
+      <div id="suggestions" class="suggestions-list" role="listbox" aria-label="Suggestions de recherche"></div>
+    </div>
+
+    <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <!-- Overlay de recherche -->
+  <div id="searchOverlay" class="search-overlay" role="dialog" aria-modal="true" aria-labelledby="search-result-title">
+    <div id="searchOverlayContent" class="search-overlay-content">
+      <button class="close-overlay" aria-label="Fermer les résultats">✕</button>
+    </div>
+  </div>
+
+  <!-- Menu overlay -->
+  <nav class="overlay-menu" id="overlayMenu" aria-label="Menu de navigation">
+    <ul class="main-menu">
+      <li>
+        <button class="menu-toggle" aria-expanded="false">
+          <span class="icon" aria-hidden="true">📘</span> 
+          <span>Information sur le cancer</span>
+          <span class="arrow" aria-hidden="true">▸</span>
+        </button>
+        <ul class="submenu">
+          <li><a class="submenu-link" href="types-cancer.html">Types de cancer</a></li>
+          <li><a class="submenu-link" href="symptomes.html">Symptômes</a></li>
+          <li><a class="submenu-link" href="prevention.html">Prévention</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <button class="menu-toggle" aria-expanded="false">
+          <span class="icon" aria-hidden="true">💊</span> 
+          <span>Traitements</span>
+          <span class="arrow" aria-hidden="true">▸</span>
+        </button>
+        <ul class="submenu">
+          <li><a class="submenu-link" href="chirurgie.html">Chirurgie</a></li>
+          <li><a class="submenu-link" href="radiotherapie.html">Radiothérapie</a></li>
+          <li><a class="submenu-link" href="chimiotherapie.html">Chimiothérapie</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <button class="menu-toggle" aria-expanded="false">
+          <span class="icon" aria-hidden="true">❤️</span> 
+          <span>Vivre avec le cancer</span>
+          <span class="arrow" aria-hidden="true">▸</span>
+        </button>
+        <ul class="submenu">
+          <li><a class="submenu-link" href="vie-quotidienne.html">Vie quotidienne</a></li>
+          <li><a class="submenu-link" href="soutien-emotionnel.html">Soutien émotionnel</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <button class="menu-toggle" aria-expanded="false">
+          <span class="icon" aria-hidden="true">🧬</span> 
+          <span>Recherche</span>
+          <span class="arrow" aria-hidden="true">▸</span>
+        </button>
+        <ul class="submenu">
+          <li><a class="submenu-link" href="essais-cliniques.html">Essais cliniques</a></li>
+          <li><a class="submenu-link" href="innovations.html">Innovations</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <button class="menu-toggle" aria-expanded="false">
+          <span class="icon" aria-hidden="true">🤝</span> 
+          <span>S'impliquer</span>
+          <span class="arrow" aria-hidden="true">▸</span>
+        </button>
+        <ul class="submenu">
+          <li><a class="submenu-link" href="benevolat.html">Bénévolat</a></li>
+          <li><a class="submenu-link" href="evenements.html">Événements</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <button class="menu-toggle" aria-expanded="false">
+          <span class="icon" aria-hidden="true">💛</span> 
+          <span>Comment donner</span>
+          <span class="arrow" aria-hidden="true">▸</span>
+        </button>
+        <ul class="submenu">
+          <li><a class="submenu-link" href="faire-un-don.html">Faire un don</a></li>
+          <li><a class="submenu-link" href="dedier-un-don.html">Dédier un don 💛</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" role="banner">
+    <div class="hero-text">
+      <h1>CancéroJeune</h1>
+      <p>Bienvenue sur la plateforme de cancer pour les jeunes.</p>
+      <a href="#don" class="cta">💛 Faire un don</a>
+    </div>
+  </section>
+
+  <!-- Contenu principal -->
+  <main id="main-content">
+    <!-- Section Présentation -->
+    <article id="presentation" class="section-container">
+      <h2>Présentation</h2>
+      
+      <div class="presentation-content">
+        <p><strong>Je m'appelle Matisse Winner, j'ai 13 ans</strong>, et je suis un élève du Collège Mont-Royal. Avec mon ami Yann-Jaden Réjouis, nous avons décidé de créer un site web sur le cancer pour notre projet d'expo-sciences.</p>
+
+        <p>Ce n'est pas un sujet choisi au hasard : <em>dans nos familles, plusieurs personnes sont mortes à cause du cancer.</em> Ces pertes nous ont profondément marqués. Elles nous ont donné le courage et la détermination de transformer notre douleur en quelque chose de constructif, utile et porteur d'espoir.</p>
+
+        <h3>Notre mission</h3>
+        <p>Notre site web n'est pas seulement une vitrine scientifique. C'est un espace où nous voulons expliquer, avec des mots simples, ce qu'est le cancer, comment il se développe, et quelles sont les façons de le prévenir ou de le détecter tôt.</p>
+
+        <p>Nous voulons que les jeunes de notre âge, les familles et même les enseignants puissent y trouver des informations <strong>claires, accessibles et fiables.</strong></p>
+
+        <h3>Pourquoi nous ?</h3>
+        <p>À 13 ans, certains pourraient croire que nos ambitions sont trop grandes. Mais nous pensons justement que c'est en commençant tôt qu'on peut changer les choses.</p>
+
+        <p>Notre rêve est que ce site devienne un outil reconnu, qui aide les gens à mieux comprendre la maladie et à se sentir moins seuls face à elle. Nous voulons aussi inspirer d'autres jeunes à utiliser la science et la technologie pour répondre à des problèmes réels.</p>
+
+        <h3>Notre engagement</h3>
+        <p>Ce projet est pour nous une manière de rendre hommage à ceux que nous avons perdus. Chaque ligne de code, chaque page écrite est une façon de dire : <em>nous n'oublions pas, et nous continuons le combat.</em></p>
+
+        <p>L'expo-sciences est seulement le début. Nous avons l'ambition de développer le site, d'ajouter des témoignages, des ressources, et peut-être même un espace interactif où les gens pourront poser des questions.</p>
+
+        <p class="closing-statement">Je crois que, même à 13 ans, nous pouvons avoir un impact. Et si notre travail peut aider ne serait-ce qu'une seule personne à mieux comprendre le cancer ou à trouver du courage, alors nous aurons déjà accompli quelque chose de grand.</p>
+      </div>
+
+      <div class="hearts" aria-hidden="true">
+        <span>❤️</span>
+        <span>❤️</span>
+        <span>❤️</span>
+        <span>❤️</span>
+        <span>❤️</span>
+      </div>
+    </article>
+
+    <!-- Section Services -->
+    <section id="services" class="section-container">
+      <h2>CanceroJeuneplay</h2>
+      <p class="service-description">Apprends en t'amusant avec notre jeu éducatif interactif !</p>
+      <a href="jeu.html" class="menu-button">🎮 Jouer au jeu</a>
+    </section>
+
+    <!-- Section Don -->
+    <section id="don" class="section-container">
+      <h2>Faire un don</h2>
+      <p class="intro-text">Merci de soutenir notre projet. Chaque don symbolique aide à sensibiliser et à soutenir la recherche.</p>
+
+      <!-- Badge de confiance -->
+      <div class="trust-badges">
+        <div class="badge">
+          <span class="badge-icon">🔒</span>
+          <span class="badge-text">Sécurisé</span>
+        </div>
+        <div class="badge">
+          <span class="badge-icon">✓</span>
+          <span class="badge-text">100% transparent</span>
+        </div>
+        <div class="badge">
+          <span class="badge-icon">💛</span>
+          <span class="badge-text">Impact direct</span>
+        </div>
+      </div>
+
+      <div class="don-container">
+        <!-- Colonne gauche : Formulaire -->
+        <div class="don-left">
+          <form id="donForm" class="don-form" aria-label="Formulaire de don">
+            <div class="form-group">
+              <label for="donNom">Votre nom :</label>
+              <input type="text" id="donNom" required aria-required="true">
+            </div>
+
+            <div class="form-group">
+              <label for="donMontant">Montant du don ($) :</label>
+              <input type="number" id="donMontant" min="1" required aria-required="true">
+            </div>
+
+            <div class="form-group">
+              <label for="donDedication">Dédier ce don à :</label>
+              <input type="text" id="donDedication" placeholder="(optionnel)">
+            </div>
+
+            <button type="submit" class="don-btn">Faire un don 💛</button>
+          </form>
+
+          <div id="donMessage" class="don-message" role="status" aria-live="polite"></div>
+        </div>
+
+        <!-- Colonne droite : Stats + Feed live -->
+        <div class="don-right">
+          <div class="don-stats">
+            <div class="stat-box">
+              <h3>Total des dons</h3>
+              <p id="donTotal" class="stat-value">0 $</p>
+            </div>
+
+            <div class="stat-box">
+              <h3>Dernier don</h3>
+              <p id="dernierDon" class="stat-value">0 $</p>
+            </div>
+          </div>
+
+          <h3>Dons en direct :</h3>
+          <div id="donLiveFeed" class="don-live-feed" role="log" aria-live="polite" aria-atomic="false"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2025 CancéroJeune — Apprenons ensemble.</p>
+      <p class="footer-credits">Créé par Matisse Winner & Yann-Jaden Réjouis</p>
+      <a href="#don" class="footer-don">💛 Faire un don</a>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="script.js" defer></script>
+</body>
+</html>
